@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vertex AI Chat</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;
+            margin: 0 auto;
+            padding-top: 50px;
+        }
+        .chat-box {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 15px;
+            height: 400px;
+            overflow-y: auto;
+            background-color: #fff;
+            max-height: 400px;
+        }
+        .chat-box p {
+            margin: 10px 0;
+        }
+        .user-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        .send-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .send-btn:hover {
+            background-color: #45a049;
+        }
+        .loading {
+            color: #007bff;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Vertex AI Chat</h2>
+        <div class="chat-box" id="chat-box">
+            <p><strong>AI:</strong> Hello! How can I assist you today?</p>
+        </div>
+        <textarea class="user-input" id="user-input" placeholder="Type your message..."></textarea>
+        <button class="send-btn" onclick="sendMessage()">Send</button>
+    </div>
+
+    <script>
+        function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+
+            if (userInput.trim() === "") return;
+
+            // Display user input in chat box
+            const chatBox = document.getElementById("chat-box");
+            chatBox.innerHTML += "<p><strong>You:</strong> " + userInput + "</p>";
+
+            // Display loading message while waiting for AI response
+            chatBox.innerHTML += "<p class='loading'><strong>AI:</strong> Writing...</p>";
+            document.getElementById("user-input").value = "";
+
+            // Scroll to the bottom of the chat box
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Send message to Flask backend
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: 'user_input=' + encodeURIComponent(userInput)
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Remove loading message
+                const loadingMessage = document.querySelector('.loading');
+                if (loadingMessage) {
+                    loadingMessage.remove();
+                }
+
+                // Display response from AI
+                if (data.response) {
+                    chatBox.innerHTML += "<p><strong>AI:</strong> " + data.response + "</p>";
+                } else {
+                    chatBox.innerHTML += "<p><strong>AI:</strong> Sorry, there was an error processing your request.</p>";
+                }
+
+                // Scroll to bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                const chatBox = document.getElementById("chat-box");
+                chatBox.innerHTML += "<p><strong>AI:</strong> Sorry, there was an error with the request.</p>";
+                chatBox.scrollTop = chatBox.scrollHeight; // Scroll to bottom
+            });
+        }
+    </script>
+</body>
+</html>
