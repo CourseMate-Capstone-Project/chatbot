@@ -7,7 +7,7 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(135deg, #e0c3fc, #8ec5fc);
+            background: linear-gradient(135deg, #9c27b0, #ff9800); /* Ungu cerah dan oranye yang lebih berani */
             margin: 0;
             display: flex;
             align-items: center;
@@ -24,7 +24,7 @@
             overflow: hidden;
         }
         .chat-header {
-            background: linear-gradient(90deg, #6a11cb, #a044ff);
+            background-color: #8e24aa; /* Ungu lebih cerah dan mencolok */
             color: white;
             padding: 15px;
             text-align: center;
@@ -36,7 +36,7 @@
             height: 400px;
             overflow-y: auto;
             padding: 20px;
-            background-color: #f3f0fc;
+            background-color: #f1f0f6; /* Latar belakang abu-abu lembut */
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -48,12 +48,12 @@
             animation: fadeIn 0.3s ease-in-out;
         }
         .chat-box .user-message {
-            background: linear-gradient(135deg, #8a2be2, #6a5acd);
+            background-color: #ff5722; /* Oranye cerah untuk pesan pengguna */
             color: white;
             align-self: flex-end;
         }
         .chat-box .ai-message {
-            background: linear-gradient(135deg, #9c27b0, #e91e63);
+            background-color: #9c27b0; /* Ungu cerah untuk pesan AI */
             color: white;
             align-self: flex-start;
         }
@@ -75,7 +75,7 @@
             box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
         }
         .send-btn {
-            background: linear-gradient(135deg, #9f44d3, #ff007f);
+            background-color: #ff5722; /* Oranye cerah untuk tombol kirim */
             color: white;
             border: none;
             border-radius: 50%;
@@ -90,10 +90,11 @@
         }
         .send-btn:hover {
             transform: scale(1.1);
+            background-color: #ff3d00; /* Oranye lebih gelap saat hover */
         }
         .loading {
             font-style: italic;
-            color: #6a11cb;
+            color: #ff5722; /* Oranye untuk teks loading */
         }
     
         @keyframes fadeIn {
@@ -106,7 +107,7 @@
                 transform: translateY(0);
             }
         }
-    </style>    
+    </style>       
 </head>
 <body>
     <div class="chat-container">
