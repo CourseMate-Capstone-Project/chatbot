@@ -16,7 +16,7 @@ COPY . .
 EXPOSE 8080
 
 # Set the environment variable for Flask to run in production mode
-ENV FLASK_APP=main.py
+ENV FLASK_APP=app.py
 ENV FLASK_ENV=production
 
 # Run the Flask app using the Gunicorn server

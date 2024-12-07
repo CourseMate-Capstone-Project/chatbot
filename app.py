@@ -1,9 +1,13 @@
 from flask import Flask, render_template, request, jsonify
+from flask_cors import CORS
 import vertexai
-from vertexai.generative_models import GenerativeModel, SafetySetting, ChatSession
+from vertexai.generative_models import GenerativeModel, SafetySetting
 
 # Initialize Flask app
 app = Flask(__name__)
+
+# Enable CORS for all routes
+CORS(app)
 
 # Initialize Vertex AI
 vertexai.init(project="866939629489", location="us-central1")
